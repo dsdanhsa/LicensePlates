@@ -1,0 +1,31 @@
+.hiencamera #my_camera{
+    min-height: 380px;
+   #background: #2196F3;
+    #padding: 10px;
+    border: 1px solid #ccc;
+}
+.title-cam{
+    margin-bottom:0;
+    font-size:14px;
+    color:#fff;
+    text-transform: uppercase;
+    padding:3px;
+}
+.col-4-img{
+    margin-top: 5px;
+    padding: 5px;
+
+}
+.col-4-img img{
+   border: 1px solid #ccc;
+   margin-left: 5px;
+   padding:10px;
+}
+#showimage{
+    overflow: auto;
+    max-height: 629px;
+    position: absolute;
+    z-index: 2;
+    background: #fff;
+    top: 32px;
+}

@@ -1,0 +1,115 @@
+{% extends 'public/layout.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h3 class="text-center title_quanlyxe">Đăng ký thông tin xe theo tháng</h3>
+        </div>
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Thông tin thời gian xe</h3>
+                </div>
+                <div class="panel-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Họ và Tên</label>
+                                    <input type="text" class="form-control" name="tenkh" placeholder="Họ và Tên" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Ngày sinh</label>
+                                    <input type="date" class="form-control" name="ngaysinh" placeholder="Ngày sinh" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Giới tính</label>
+                                    <input type="text" class="form-control" name="gioitinh" placeholder="Giới tính" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Địa chỉ</label>
+                                    <input type="text" class="form-control" name="diachi" placeholder="Địa chỉ" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Chứng minh nhân dân (Thẻ căn cước)</label>
+                                    <input type="text" class="form-control" name="cmnd" placeholder="Chứng minh nhân dân (Thẻ căn cước)" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Số điện thoại</label>
+                                    <input type="text" class="form-control" name="sodienthoai" placeholder="Số điện thoại" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Biển số xe</label>
+                                    <input type="text" class="form-control" name="biensoxe" placeholder="Biển số xe" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="">Chọn thông tin xe:</label>
+                                     <select class="form-control" name="thongtingiaxe" id="thongtingiaxe">
+                                        <option value="">---Chọn thông tin---</option>
+                                         {% for val in tbl_giaxe %}
+                                            <option value="{{ val.0 }}">{{ val.1 }} - {{ val.2 }} - {{ val.3 }} ({{ val.5 }} - {{ val.6 }})</option>
+                                         {% endfor %}
+                                     </select>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="hidden" name="themtaikhoan">
+                                    <button type="submit" class="btn btn-primary" name="themkhachhang" value="themkhachhang">Thêm</button>
+                                </div>
+                            </div>
+                        </div>
+                      </form>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+             <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Họ tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
+                        <th>Địa chỉ</th>
+                        <th>Chứng minh nhân dân</th>
+                        <th>Số điện thoại</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                        {% for val in tbl_khach %}
+                            <tr>
+                                <td>{{ val.1 }}</td>
+                                <td>{{ val.2 }}</td>
+                                <td>{{ val.3 }}</td>
+                                <td>{{ val.4 }}</td>
+                                <td>{{ val.5 }}</td>
+                                <td>{{ val.6 }}</td>
+
+                            </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'public/layout.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+         <h3>Thông tin nhân viên</h3>
+         <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Tên nhân viên</label>
+                        <input type="text" class="form-control" name="tennhanvien" placeholder="Tên nhân viên" required>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Ngày sinh</label>
+                        <input type="date" class="form-control" name="ngaysinh" placeholder="Ngày sinh" required>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="">Giới tính</label>
+                        <input type="text" class="form-control" name="gioitinh" placeholder="Giới tính" required>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="">Địa chỉ</label>
+                        <input type="text" class="form-control" name="diachi" placeholder="Địa chỉ" required>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="">Số điện thoại</label>
+                        <input type="text" class="form-control" name="sodienthoai" placeholder="Số điện thoại" required>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <input type="hidden" name="themtaikhoan">
+                        <button type="submit" class="btn btn-primary" name="themnhanvien" value="themnhanvien">Thêm nhân viên</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tên nhân viên</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th class="text-center" width="15%">Tác vụ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in list_nv %}
+                        <tr>
+                            <td>{{ item.1}}</td>
+                            <td>{{ item.2}}</td>
+                            <td>{{ item.3}}</td>
+                            <td>{{ item.4}}</td>
+                            <td>{{ item.5}}</td>
+                            <td class="text-center">
+                                <button class="btn btn-info">Sửa</button>
+                                <button class="btn btn-danger">Xoá</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+          </form>
+            <hr>
+         <h3>Thông tin tài khoản</h3>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="themnhanvien">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Nhân viên</label>
+                        <select class="form-control" required name="nhanvien">
+                            <option value="" >--Chọn nhân viên--</option>
+                            {% for item in nhanvien %}
+                                <option value="{{ item.0 }}" > {{ item.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Tài khoản</label>
+                        <input type="text" class="form-control" name="taikhoan" placeholder="Tài khoản" required>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Mật khẩu</label>
+                        <input type="password" class="form-control" name="matkhau" placeholder="Mật khẩu" required>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="">Quyền</label>
+                        <select class="form-control" name="quyen" required>
+                            <option value="2" selected>Nhân viên</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" name="themtaikhoan" value="themtaikhoan">Thêm tài khoản</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tên nhân viên</th>
+                        <th>Tên tài khoản</th>
+                        <th>Quyền</th>
+                        <th class="text-center" width="15%">Tác vụ</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    {% for item in nhanvien %}
+                        <tr>
+                            <td>{{ item.1}}</td>
+                            <td>{{ item.7}}</td>
+                            <td>{{ item.12}}</td>
+                            <td class="text-center">
+                                <button class="btn btn-info">Sửa</button>
+                                <button class="btn btn-danger">Xoá</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+</div>
+{% endblock %}

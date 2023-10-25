@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>Nhận diện biển số xe + nhân diện khuôn mặt</title>
+       <link rel="icon" href="{% static 'public/img/DV01.png'%}"/>
+       <link href="{% static 'public/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+       <link href="{% static 'public/css/style.css' %}" rel="stylesheet">
+       <link rel="stylesheet" type="text/css" href="{% static 'public/css/animate.css' %}">
+       <script src="{% static 'public/jquery/jquery.js' %}"></script>
+       <script src="{% static 'public/bootstrap/js/bootstrap.min.js' %}"></script>
+       <link rel="stylesheet" href="{% static 'public/css/dataTables.bootstrap.min.css' %}">
+        <script src="{% static 'public/jquery/jquery.dataTables.min.js'%}"></script>
+        <script src="{% static 'public/jquery/dataTables.bootstrap.min.js'%}"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <link href="https://fonts.googleapis.com/css?family=Muli:400,600" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'public/css/font-awesome.min.css' %}" />
+        <link href="https://fonts.googleapis.com/css?family=Arima+Madurai&display=swap" rel="stylesheet">
+        <script src="{% static 'public/js/webcam.min.js' %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'public/js/jquery.fancybox.css' %}" />
+        <script type="text/javascript" src="{% static 'public/js/jquery.fancybox.js' %}"></script>
+        <script type="text/javascript" src="{% static 'public/js/fancybox.js' %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'public/css/toastr.css' %}" />
+        <script type="text/javascript" src="{% static 'public/js/tienganh.js' %}"></script>
+        <script type="text/javascript" src="{% static 'public/js/toastr.js' %}"></script>
+        <link href="https://fonts.googleapis.com/css?family=Arima+Madurai&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;subset=vietnamese" rel="stylesheet">
+   </head>
+   <body>
+        <header>
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{% url 'Core:Welcome' %}"><i class="fa fa-home" aria-hidden="true"></i>&nbsp; Trang chủ</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-th-large"></i>&nbsp;Danh mục hệ thống<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{% url 'Core:taikhoan' %}"><i class="fa fa-genderless" aria-hidden="true"></i>&nbsp; Quản lý Tài khoản/ Nhân viên</a></li>
+                                    <li><a href="{% url 'Core:giaxe' %}"><i class="fa fa-genderless" aria-hidden="true"></i>&nbsp; Quản lý giá xe</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{% url 'Core:dangkyxethang' %}"><i class="fa fa-genderless" aria-hidden="true"></i>&nbsp;Đăng ký gửi xe theo tháng</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-th-large"></i>&nbsp;Nhận diện biển số xe<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{% url 'Core:nhandienbienso' %}"><i class="fa fa-fw fa-gg"></i>&nbsp; Nhận diện biển số xe</a></li>
+                                    <li><a href="{% url 'Core:detect_webbycamera' %}"><i class="fa fa-fw fa-gg"></i>&nbsp; Nhận diện biển số xe camera</a></li>
+                                    <li><a href="{% url 'Core:chonbienso' %}"><i class="fa fa-fw fa-gg" aria-hidden="true"></i>&nbsp; Nhận diện biển số xe hình ảnh</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; Đăng xuất</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div>
+            </nav>
+        </header>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    <!--footer-->
+    {% block js %}
+    {% endblock %}
+
+   {% include 'public/footer.html' %}
+

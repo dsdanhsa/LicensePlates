@@ -1,0 +1,74 @@
+{% extends 'public/layout.html' %}
+{% load static %}
+{% block content %}
+    <div class="container" style="box-shadow: 0px 0px 10px 0px #ccc;margin-top: 10px;">
+        <div class="col-md-12">
+            <br>
+            <h3 class="text-center alert alert-success">Chon biển số xe</h3>
+            <form method="post" enctype="multipart/form-data">
+                  <div class="form-group">
+                        <div class="col-md-12">
+                            <label>Chọn hình ảnh:</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input type="file" class="form-control" name="hinhanh" onchange="readURL(this);">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-info" id="nhandien">Nhận diện biển số</button>
+                        </div>
+                  </div>
+            </form>
+        </div>
+        <div class="col-md-12">
+            <hr>
+            <div class="col-md-6">
+                <br>
+                <h1 class="text-center label label-primary size">Hình ảnh biển số vừa chọn</h1>
+                <input type="hidden" value="" id="base_64_anh">
+                <img src="{% static 'public/img/image_upload.png' %}" id="anh" class="hinhanhnhandien"/>
+            </div>
+            <div class="col-md-6">
+                <br>
+                <h1 class="text-center label label-warning size">Tên biển số</h1>
+                <h1 id="tenbienso">
+
+                </h1>
+            </div>
+
+        </div>
+    </div>
+    <script>
+         function readURL(input) {
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+              $('#anh').attr('src', e.target.result);
+              $("#base_64_anh").val(e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+          }
+        }
+        $(document).ready(function(){
+            $("#nhandien").click(function(){
+                base_64 = $("#base_64_anh").val();
+                img = base_64.replace('data:image/jpeg;base64,', ''); // loại bỏ chuỗi đầu để lưu vào foder
+                img = img.replace(' ', '+')
+                if(base_64 != ""){
+                    $.ajax({
+                         url: "{% url 'Core:nhandienHinhAnh' %}",
+                         type: 'POST',
+                         data: {
+                            'link_anh': JSON.stringify(img),
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'
+                         },
+                        success:function(data){
+                        console.log(data)
+                           $("#tenbienso").text(data['data'])
+                        },
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

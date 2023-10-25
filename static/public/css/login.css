@@ -1,0 +1,87 @@
+@font-face{
+    src:url('../font-family/UTM/UTMHelvetIns.ttf');
+    font-family: "UTM";
+}
+.pd-0{
+    padding: 0;
+}
+body{
+    font-family: 'Arima Madurai';
+    background: #f0f0f0;
+}
+.form-gp input {
+    height: 47px;
+}
+.focused label{
+	top:-25px;
+}
+.login-box {
+    min-height: 78vh;
+}
+.panel-primary>.panel-heading {
+    background-color: #fff;
+    border-color: #fff;
+}
+.splash-description{
+	color:#000000;
+}
+.splash-description h4:nth-child(1){
+	font-size: 19px;
+	color: #014886;
+}
+.splash-description h5{
+	color: #ef0949;
+	font-size: 16px;
+}
+.p-r{
+	border: none;
+    border-radius: 6px;
+    box-shadow: 0px 0px 10px 0px #Ccc;
+    padding: 25px;
+    margin-top: 29px;
+    transform-origin: 0% 100%;
+    /*animation: lat 2s forwards;*/
+	border-top: 3px solid #1397d6;
+}
+/*@-webkit-keyframes lat{
+	0%{
+		opacity: 0;
+		transform: rotateY(90deg);
+	}
+	100%{
+		opacity: 1;
+		transform: rotateY(0deg);
+	}
+}*/
+.col-lg-offset-3 {
+    /*margin-left: 30%;*/
+}
+.repon-log{
+	perspective: 900px;
+}
+.ct-login{
+	transition: all 1s;
+	z-index: 2;
+    position: relative;
+}
+.bacground{
+    background:url('../img/giaothong_chihieu_sgtt.jpg');
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	background-size: cover;
+	background-position: center;
+	/*opacity: 0.1;*/
+	transition: all 1s;
+}
+.bacground1{
+	position: absolute;
+    z-index: 1;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    background-image: /*background-image: -webkit-linear-gradient(bottom left, #d1ebd1 0%, #fd8fa869 40%, #97979787 100%);*/;
+    background-image: /*background-image: -o-linear-gradient(bottom left, #d1ebd1 0%, #fd8fa869 40%, #97979787 100%);*/;
+    background-image: /*background-image: linear-gradient(to top right, #d1ebd1 0%, #fd8fa869 40%, #97979787 100%);*/;
+}

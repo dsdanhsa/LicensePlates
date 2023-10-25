@@ -1,0 +1,55 @@
+/* (1366x768) WXGA Display */
+@media screen and (min-width: 1441px) and (max-width: 1920px) {
+}
+
+/*Medium Desktop Device*/
+@media screen and (min-width: 1200px) and (max-width: 1440px) {
+	.repon-log{
+    	margin-left: 29%;
+    }
+    .splash-description h4:nth-child(1){
+		font-size: 30px;
+		/*color: #014886;*/
+		/*text-shadow: #43c4eb 0px 0px 0px, #d84f4f 0px 0px 0px, #c3d624 0px 0px 0px, #beef29 0px 0px 0px, #56f305 0px 0px 0px, #c6e70f 0px 0px 0px;*/
+	}
+	.splash-description h5{
+		/*color: #ef0949;*/
+	    font-size: 17px;
+	}
+	.title-sadow{
+	    font-size: 28px;
+	}
+}
+/* Normal desktop :992px. */
+
+@media (min-width: 1200px) and (max-width: 1364px) {
+
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/* Normal desktop :991px. */
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/* small mobile :320px. */
+
+@media (max-width: 767px) {
+
+}
+
+/* Large Mobile :480px. */
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+
+}
+
+/* small mobile :320px. */
+
+@media (min-width: 240px) and (max-width: 479px) {
+
+}
+

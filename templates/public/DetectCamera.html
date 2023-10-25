@@ -1,0 +1,196 @@
+{% extends 'public/layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'public/css/detectCamera.css'%}">
+<form class="main-camera" id="friend-form" >
+    {% csrf_token %}
+    <div class="row hiencamera">
+        <div class="col-md-6 col-xs-12 col-6">
+            <p class="text-center alert label-success title-cam col-xs-12">Giao diện Camera </p>
+            <div id="my_camera">
+            </div>
+            <br><br><br>
+            <div class="col-md-12 text-center">
+                 <div class="form-group">
+                    <label class="control-label col-sm-2">Biển số:</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" >
+                    </div>
+                  </div>
+            </div>
+            <br><br><br>
+            <div class="col-md-12 text-center">
+                 <button class="btn btn-warning" type="button" id="batcamera" >Bật camera</button>
+                 <button class="btn btn-danger" type="button" id="tatcamera" >Tắt camera</button>
+                 <button class="btn btn-primary" type="button" id="chupanh">Ghi Nhận xe</button>
+                <button class="btn btn-success" type="button" id="traxe">Trả xe</button>
+                 <button class="btn btn-default" type="button" id="fomat">Fomat</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+<!--            <p class="text-center alert label-warning title-cam col-xs-12">Hiển thị hình ảnh </p>-->
+<!--            <div id="showimage" class="row">-->
+
+<!--            </div>-->
+           <p class="text-center alert label-warning title-cam col-xs-12">Danh sách gửi xe </p>
+          <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Biển số</th>
+                    <th>Thời gian gửi xe</th>
+                    <th>Thời gian gửi xe</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block js %}
+<script>
+    Webcam.set({
+            image_format: 'jpeg',
+            jpeg_quality: 90
+         });
+     Webcam.attach('#my_camera');
+    $(document).ready(function() {
+        $("#batcamera").click(function(){
+             batcamera();
+        });
+
+        function batcamera(){
+            Webcam.set({
+                    image_format: 'jpeg',
+                    jpeg_quality: 90
+                 });
+            Webcam.attach('#my_camera');
+        }
+
+         $("#tatcamera").click(function(){
+              Webcam.reset();
+        });
+
+        $("#fomat").click(function(){
+            batcamera();
+            $("#showimage").html("");
+        });
+
+
+		$("#chupanh").click(function(){
+		    // play sound effect
+            Webcam.snap(function(data_uri){
+<!--                var html = ''-->
+<!--                html += '<div class="col-md-6 col-4-img imgproduct">';-->
+<!--                    html += '<input type="hidden" class="image-tag" name="linkanh[]" value="'+data_uri+'">';-->
+<!--                    html+='<a href="'+data_uri+'" class="img_sp" rel="motnhom">'-->
+<!--                        html += '<img src="'+data_uri+'" width="98%" class="anhSP anhfrist">';-->
+<!--                    html += '</a>'-->
+<!--                html += '</div>';-->
+<!--                if($("#showimage img").length > 5){-->
+<!--                     error("Bạn chỉ có thể lưu 6 ảnh");-->
+<!--                     $("#showimage input").remove();-->
+<!--                }else{-->
+<!--                    $("#showimage").append(html);-->
+<!--                }-->
+            });
+
+            if($("#showimage img").length <= 6){
+                linkanh = $("input[name='linkanh[]']");
+                link = [];
+                for(i = 0; i < linkanh.length; i++){
+                    img = linkanh.eq(i).val().replace('data:image/jpeg;base64,', ''); // loại bỏ chuỗi đầu để lưu vào foder
+                    img = img.replace(' ', '+')
+                    link.push({'id': i, 'link_anh' : img});
+                }
+
+                $.ajax({
+                     url: "{% url 'Core:post_friend' %}",
+                     type: 'POST',
+                     data: {
+                        'link_anh': JSON.stringify(link),
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                     },
+                    success:function(data){
+                        var html = '';
+                        dulieu = data['data'];
+                        $("#tbody").html("");
+                        for(i =0; i < dulieu.length; i++){
+                            if(dulieu[i][3] != null && dulieu[i][2] != null){
+                                trangthai = "<label class='label label-success'>Đã trả xe</label>";
+                            }else if(dulieu[i][2] != null && dulieu[i][3] == ""){
+                                trangthai = "<label class='label label-danger'>Đã gửi xe</label>";
+                            }else  if(dulieu[i][3] == null && dulieu[i][2] == null){
+                                trangthai = "<label class='label label-danger'>Chưa gửi xe</label>";
+                            }
+                            html += '<tr>';
+                                html += '<td>'+[i+1]+'</td>';
+                                html += '<td>'+dulieu[i][1]+'</td>';
+                                html += '<td>'+dulieu[i][2]+'</td>';
+                                html += '<td>'+dulieu[i][3]+'</td>';
+                                html += '<td>'+trangthai+'</td>';
+                            html += '</tr>';
+                        }
+                        $("#tbody").html(html);
+                    },
+                });
+            }
+
+		});
+
+		 function dataURLtoFile(dataurl, filename) {
+            var arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, {type:mime});
+        }
+        load_dulieu();
+        function load_dulieu(){
+             $.ajax({
+                     url: "{% url 'Core:Welcome' %}",
+                     type: 'POST',
+                     data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                     },
+                    success:function(data){
+                        var html = '';
+                        dulieu = data['data'];
+                        $("#tbody").html("");
+                        console.log(data)
+                        for(i =0; i < dulieu.length; i++){
+
+                            if(dulieu[i][3] != null && dulieu[i][2] != null){
+                                trangthai = "<label class='label label-success'>Đã trả xe</label>";
+                            }else if(dulieu[i][2] != null && dulieu[i][3] == null){
+                                trangthai = "<label class='label label-primary'>Đã gửi xe</label>";
+                            }else  if(dulieu[i][3] == null && dulieu[i][2] == null){
+                                trangthai = "<label class='label label-danger'>Chưa gửi xe</label>";
+                            }
+                            html += '<tr>';
+                                html += '<td>'+[i+1]+'</td>';
+                                html += '<td>'+dulieu[i][1]+'</td>';
+                                html += '<td>'+dulieu[i][2]+'</td>';
+                                html += '<td>'+dulieu[i][3]+'</td>';
+                                html += '<td>'+trangthai+'</td>';
+                            html += '</tr>';
+                        }
+                        $("#tbody").html(html);
+                    },
+                });
+        }
+
+
+	});
+</script>
+{% endblock js %}

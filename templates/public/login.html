@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+    <title>Hệ thống nhận diện biển số xe</title>
+    <link rel="icon" href="{% static 'public/img/DV01.png'%}"/>
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'public/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'public/css/animate.css' %}">
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'public/js/jquery.min.js' %}"></script>
+    <script src="{% static 'public/bootstrap/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Arima+Madurai&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;subset=vietnamese" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'public/css/login.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'public/css/responsive.css' %}">
+</head>
+<body >
+    <div class="container-fluid" style="padding:0 ">
+        <div class="bacground animated  ">
+        </div>
+        <div class="bacground1">
+        </div>
+        <div class="container animated ct-login">
+            <div class="row">
+                <div class="col-lg-5 repon-log">
+                    <div class="panel panel-primary p-r">
+                        <div class="panel-heading text-center">
+                            <img src="{% static 'public/img/logo.png' %}" alt="logo" height="110" class="logo-img">
+                            <span class="splash-description"><h4 style="font-weight:bold;">Đăng nhập hệ thống</h4><h5 style="font-weight:bold;">Nhận diện biển số xe</h5></span>
+                            <hr>
+                        </div>
+                        <div class="panel-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label>Tài khoản:</label>
+                                    <input type="text" class="form-control" name="taikhoan" placeholder="Tài khoản..." required="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Mật khẩu:</label>
+                                    <input type="password" class="form-control" name="matkhau" placeholder="Mật khẩu" required="">
+                                </div>
+                                <div class="form-group text-center">
+                                    <button type="submit" class="btn btn-primary" name="dangnhap" value="dangnhap">Đăng nhập</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+

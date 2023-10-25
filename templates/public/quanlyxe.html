@@ -1,0 +1,218 @@
+{% extends 'public/layout.html' %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <h3 class="text-center title_quanlyxe">Quản lý thông tin giá xe</h3>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Thông tin thời gian xe</h3>
+                </div>
+                <div class="panel-body">
+                    <form method="post" action="{% url 'Core:save_time' %}">
+                        {% csrf_token %}
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Thời gian</th>
+                                    <th>TG_BĐ</th>
+                                    <th>TG_KT</th>
+                                    <th class="text-center">Tác vụ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for val in tbl_time %}
+                                <tr>
+                                    <td><a href="" class="sua">{{ val.1 }}</a></td>
+                                    <td>{{ val.2 }}</td>
+                                    <td>{{ val.3 }}</td>
+                                    <td class="text-center">
+                                        <a href="" class="btn btn-danger">Xoá</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="col-md-12">
+                            <a class="btn btn-success" data-toggle="modal" href='#modal-id'>Thêm thời gian</a>
+                            <div class="modal fade" id="modal-id">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Thêm thời gian</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                             <div class="form-group">
+                                                <label for="">Tên thời gian</label>
+                                                <input type="text" class="form-control" name="name_time" placeholder="Tên thời gian" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Thời gian bắt đầu</label>
+                                                <input type="text" class="form-control" name="time_bd" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Thời gian kết thúc</label>
+                                                <input type="text" class="form-control" name="time_kt" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary" name="save_time">Lưu thông tin</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Thông tin thời gian và loại xe</h3>
+                </div>
+                <div class="panel-body">
+                     <form method="post" action="{% url 'Core:save_giaxe' %}">
+                         {% csrf_token %}
+                         <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Loại xe</th>
+                                    <th>Thời gian</th>
+                                    <th>Giá tiền</th>
+                                    <th>Loại vé</th>
+                                    <th>TGBD</th>
+                                    <th>TGKT</th>
+                                    <th class="text-center">Tác vụ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for val in tbl_giaxe %}
+                                <tr>
+                                    <td><a href="" class="sua">{{ val.0 }}</a></td>
+                                    <td>{{ val.1 }}</td>
+                                    <td>{{ val.2 }}</td>
+                                    <td>{{ val.3 }}</td>
+                                    <td>{{ val.4 }}</td>
+                                    <td>{{ val.5 }}</td>
+                                    <td class="text-center">
+                                        <a href="" class="btn btn-danger">Xoá</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                         <div class="col-md-12">
+                            <a class="btn btn-warning" data-toggle="modal" href='#modal-giaxe'>Thêm giá xe</a>
+                            <div class="modal fade" id="modal-giaxe">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Thêm thông tin về giá xe</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="">Chọn loại xe</label>
+                                                <select class="form-control" required name="thoigian_loaixe">
+                                                    {% for val in tbl_loaixe %}
+                                                        <option value="{{ val.0 }}">{{ val.1 }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Chọn thời gian</label>
+                                                <select class="form-control" required name="thoigian_giaxe">
+                                                    {% for val in tbl_time %}
+                                                        <option value="{{ val.0 }}">{{ val.1 }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Giá tiền</label>
+                                                <input type="text" name="giatienxe" class="form-control">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Loại vé</label>
+                                                <input type="text" name="loaive" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-warning" name="save_giaxe" value="save_giaxe">Lưu thông tin</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Thông tin loại xe</h3>
+                </div>
+                <div class="panel-body">
+                    <form method="post" action="{% url 'Core:save_loaixe' %}">
+                        {% csrf_token %}
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Tên loại</th>
+                                    <th class="text-center">Tác vụ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               {% for val in tbl_loaixe %}
+                                <tr>
+                                    <td><a href="" class="sua">{{ val.1 }}</a></td>
+                                    <td class="text-center">
+                                        <a href="{% url 'Core:xoa_loaixe' %}{{ val.0 }}" class="btn btn-danger">Xoá</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="col-md-12">
+                             <a class="btn btn-info" data-toggle="modal" href='#modal-loaixe'>Thêm loại xe</a>
+                            <div class="modal fade" id="modal-loaixe">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Modal title</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="">Tên loại xe</label>
+                                                <input type="text" class="form-control" name="tenloaixe" placeholder="Tên loại xe" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-info" name="save_loaixe" value="save_loaixe">Lưu thông tin</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

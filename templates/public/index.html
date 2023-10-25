@@ -1,0 +1,24 @@
+{% extends 'public/layout.html' %}
+{% load static %}
+{% block content %}
+   <div class="container">
+      <div class="panel panel-primary">
+          <div class="panel-body trangchu-body">
+              <p class="text-center title">Chào mừng bạn đến với Hệ Thống</p>
+              <p class="text-center title_1">Chức năng của hệ thống</p>
+             <div class="col-md-6">
+                 <p class="retagle bg1"><a href="{% url 'Core:taikhoan' %}"><i class="fa fa-th-large"></i>&nbsp; Quản lý Tài khoản / Nhân viên</a></p>
+                 <p class="retagle bg2"><a href="{% url 'Core:detect_webbycamera' %}"><i class="fa fa-fw fa-gg"></i>&nbsp; Nhận diện biển số</a></a></p>
+                 <p class="retagle bg6"><a href="{% url 'Core:chonbienso' %}"><i class="fa fa-fw fa-gg"></i>&nbsp; Nhận diện hình ảnh biển số</a></a></p>
+             </div>
+             <div class="col-md-6">
+                  <p class="retagle bg3"><a href=""><i class="fa fa-snowflake-o" aria-hidden="true"></i>&nbsp;Đến phương tiện giao thông</a></p>
+                  <p class="retagle bg4"><a href=""><i class="fa fa-smile-o" aria-hidden="true"></i>&nbsp;Nhận diện khuôn mặt</a></p>
+                  <p class="retagle bg5"><a href=""><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Báo cáo thống kê</a></p>
+             </div>
+          </div>
+      </div>
+   </div>
+
+{% endblock %}
+

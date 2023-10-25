@@ -1,0 +1,206 @@
+{% extends 'public/layout.html' %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <h3 class="text-center title_quanlyxe">Nhận diện biển số xe</h3>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Thông tin nhận dạng biển số</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12 text-center">
+                        <form method="post" action="{% url 'Core:batcamera' %}">
+                            {% csrf_token %}
+                            <button class="btn btn-warning" type="submit" name="batcamera" value="batcamera">Bật camera</button>
+                        </form>
+                        <hr>
+                    </div>
+                    <form method="post">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="file" class="form-control" id="changeAnh" name="hinhanh" onchange="readURL(this);">
+                            </div>
+                            <div class="form-group">
+                                 <div class="form-group">
+                                 <label for="">Chọn thông tin xe:</label>
+                                     <select class="form-control" name="thongtingiaxe" id="thongtingiaxe">
+                                        <option value="">---Chọn thông tin---</option>
+                                         {% for val in tbl_giaxe %}
+                                            <option value="{{ val.0 }}">{{ val.1 }} - {{ val.2 }} - {{ val.3 }} ({{ val.5 }} - {{ val.6 }})</option>
+                                         {% endfor %}
+                                     </select>
+                                </div>
+                                <button type="button" class="btn btn-info" id="nhandien">Nhận diện biển số</button>
+
+                            </div>
+                             <div class="form-group">
+                                <br>
+                                <h1 class="text-center label label-primary size">Hình ảnh biển số vừa chọn</h1>
+                                <p class="text-center label label-success size"><span class="biensoxe">Biển số</span></p>
+                                <input type="hidden" value="" id="base_64_anh">
+                                <img src="{% static 'public/img/image_upload.png' %}" id="anh" class="hinhanhnhandien"/>
+                            </div>
+
+                        </div>
+                    </form>
+                    <hr>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="">Nhập biển số :</label>
+                                <input type="text" class="form-control" id="bienso" name="bienso" required>
+                            </div>
+
+                            <div class="form-group">
+                                <button name="luuthongtin" value="luu" type="submit" class="btn btn-success">Lưu thông tin</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Danh sách biển số</h3>
+                </div>
+                <div class="panel-body">
+                    <form method="post" action="{% url 'Core:traxe' %}">
+                        {% csrf_token %}
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Loại xe</th>
+                                    <th>Biển số</th>
+                                    <th>Ngày gửi</th>
+                                    <th>TG_BĐ gửi</th>
+                                    <th>TG_KT_gửi</th>
+                                    <th>Buổi</th>
+                                    <th>Thông tin giá</th>
+                                    <th>Trạng thái</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Ghi chú</th>
+                                    <th>Tác vụ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                    {% for val in tbl_guixe %}
+                                        <tr>
+                                            <td>{{ val.0 }}</td>
+                                            <td> <label class="label label-success">{{ val.1 }}</label> </td>
+                                            <td>{{ val.2 }}</td>
+                                            <td><span class="time">{{ val.3 }}</span></td>
+                                            <td><span class="time">{{ val.4 }}</span></td>
+                                            <td>{{ val.5 }} <br>  ({{ val.6 }} - {{ val.7 }})</td>
+                                            <td>{{ val.9 }}</td>
+                                            {% if val.10 == 'Đã trả xe' %}
+                                                <td><label class="label label-primary">{{ val.10 }}</label> </td>
+                                            {% endif %}
+
+                                            {% if val.10 != 'Đã trả xe' %}
+                                                <td><label class="label label-warning">{{ val.10 }}</label> </td>
+                                            {% endif %}
+
+                                            <td><label class="label label-info">{{ val.11 }}</label></td>
+                                            <td>{{ val.12 }}</td>
+                                            <td>
+                                                {% if val.10 != 'Đã trả xe' %}
+                                                    <button type="submit" name="traxe" value="{{ val.13 }}" class="btn btn-primary"><i class="fa fa-motorcycle" aria-hidden="true"></i> &nbsp; Trả xe</button>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function readURL(input) {
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+              $('#anh').attr('src', e.target.result);
+              $("#base_64_anh").val(e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+          }
+        }
+        $(document).ready(function(){
+            time = $('.time');
+            for (i =0; i < time.length; i++){
+                if(time.eq(i).text() != 0){
+                    now = new Date();
+                    now = now.getTime();
+                    date = new Date(parseInt(time.eq(i).text(), 10) * 1000);
+                    year = date.getFullYear();
+                    month = date.getMonth() + 1;
+                    year = date.getDate();
+                    hours = date.getHours();
+                    minutes = date.getMinutes();
+                    seconds = date.getSeconds();
+                    ngay =year+"/"+month+"/"+year+" "+ hours + ':' + minutes + ':'+seconds
+                    $('.time').eq(i).text(ngay)
+                }
+
+            }
+            tt = {'bienso':'', 'giaxe':''};
+            var get_tt = JSON.parse(localStorage.getItem('tt'));
+            if (get_tt != null) {
+                tt['giaxe'] = get_tt['giaxe'];
+                tt['bienso'] = get_tt['bienso'];
+            }
+
+            $("#thongtingiaxe").val(tt['giaxe']).trigger('change')
+            $("#bienso").val(tt['bienso'])
+            $("#thongtingiaxe").change(function(){
+                tt['giaxe'] = $(this).val();
+                tt['bienso'] = $("#bienso").val();
+                console.log(tt)
+                localStorage.setItem('tt',  JSON.stringify(tt));
+            });
+            $("#bienso").change(function(){
+                tt['bienso'] = $(this).val();
+                tt['giaxe'] = $("#thongtingiaxe").val();
+                                console.log(tt)
+                localStorage.setItem('tt', JSON.stringify(tt) );
+            });
+
+            $("#nhandien").click(function(){
+                base_64 = $("#base_64_anh").val();
+                img = base_64.replace('data:image/jpeg;base64,', ''); // loại bỏ chuỗi đầu để lưu vào foder
+                img = img.replace(' ', '+')
+                console.log(base_64)
+                if(base_64 != ""){
+                    $.ajax({
+                         url: "{% url 'Core:nhandienanh' %}",
+                         type: 'POST',
+                         data: {
+                            'link_anh': JSON.stringify(img),
+                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                            'giaxe': $("#thongtingiaxe").val()
+                         },
+                        success:function(data){
+                            console.log(data)
+                           $(".biensoxe").text(data['data'])
+                           setTimeout(function(){
+                            location.reload();
+                           }, 2000)
+                        },
+                    });
+                }
+            });
+
+        });
+    </script>
+{% endblock %}
